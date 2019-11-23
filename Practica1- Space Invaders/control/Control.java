@@ -4,8 +4,9 @@ import tp.p1.logic.*;
 import java.util.*;
 
 public class Control {
-	Game juego;
-	Scanner obj;
+	private Game juego;
+	private Scanner obj;
+
 	public Control(String Level)
 	{
 		obj = new Scanner(System.in);
