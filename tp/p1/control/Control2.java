@@ -1,13 +1,13 @@
-package tp.p1.control;
+/*package tp.p1.control;
 
 import tp.p1.logic.*;
 import java.util.*;
 
-public class Control {
+public class Control2 {
 	private Game juego;
 	private Scanner obj;
 
-	public Control(String Level)
+	public Control2(String Level)
 	{
 		obj = new Scanner(System.in);
 		juego = new Game();
@@ -140,4 +140,4 @@ public class Control {
 	}
 	
 }
-	
+*/

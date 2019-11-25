@@ -129,6 +129,10 @@ public class Game {
 			Ship.set_shockwave(false);
 		}
 	}
+	public void c_move(int key)
+	{
+		Ship.move(key);
+	}
 	public void c_reset()
 	{
 		String s_level;

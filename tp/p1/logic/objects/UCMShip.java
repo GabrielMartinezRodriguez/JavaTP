@@ -39,7 +39,7 @@ public class UCMShip {
 		if(life > 0)
 			str = "^__^";
 		else
-			str = "¡xx¡";
+			str = "ï¿½xxï¿½";
 		return str;
 	}
 	public void Hurt()
@@ -63,10 +63,14 @@ public class UCMShip {
 	}
 	public void move(int key)
 	{
-		if(key == 0 && col != 0)
+		if(key == 0 && col > 0)
 			col--;
-		else if (key == 1 && col != 8)
+		else if (key == 1 && col < 8)
 			col++;
+		else if (key == 2 && col < 7)
+			col = col + 2;
+		else if (key == 3 && col > 1)
+			col = col - 2;
 	}
 	public void set_shockwave(boolean shock)
 	{

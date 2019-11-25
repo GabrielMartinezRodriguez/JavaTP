@@ -34,7 +34,5 @@ public class Main {
 		}
 		else
 			System.out.println("ERROR EN LOS ARGUMENTOS");
-		
-		
 	}
 }

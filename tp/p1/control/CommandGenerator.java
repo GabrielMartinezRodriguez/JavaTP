@@ -1,8 +1,5 @@
 package tp.p1.control;
 
-import tp.p1.logic.*;
-import java.util.*;
-
 public class CommandGenerator
 {
     private static Command[] availableCommands = {
@@ -10,8 +7,6 @@ public class CommandGenerator
         new HelpCommand(),
         new ResetCommand(),
         new ExitCommand(),
-        new ListCommand(),
-        new UpdateCommand(),
         new MoveCommand(),
         new ShockwaveCommand()
     };
@@ -24,12 +19,28 @@ public class CommandGenerator
 
         flag = true;
         i = 0;
-        while(i < availableCommands.lenght && flag)
+        returned = null;
+        while(i < availableCommands.length && flag)
         {
             if((returned = availableCommands[i].parse(commandWords)) != null)
                 flag = false;
             i++;
         }
         return (returned);
+    }
+    
+    public static String commandHelp()
+    {
+    	int i;
+    	String buffer;
+    	
+    	buffer = new String("");
+    	i = 0;
+    	while(i < availableCommands.length)
+        {
+           buffer += availableCommands[i].helpText();
+           i++;
+        }
+    	return (buffer);
     }
 }
