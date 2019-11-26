@@ -1,75 +1,70 @@
 package tp.p1.logic;
+
 import tp.p1.util.*;
 
 public enum Level {
-		EASY,HARD,INSANE;
-	private int		n_destroyer;
-	private int		n_regular;
-	private float	f_shoot;
-	private int		speed;
-	private float	f_ovni;
-	private Cord 	cord_regular;
-	private Cord 	cord_destroyer;
-	
-	public void ini_level()
-	{
-		if(this == EASY)
-		{
-			n_destroyer = 2;
-			n_regular = 4;
-			f_shoot = 0.1f;
-			speed = 3;
-			f_ovni = 0.5f;
-			cord_regular = new Cord(1,3);
-			cord_destroyer = new Cord(2,4);
-		}
-		else if(this == HARD)
-		{
-			n_destroyer = 2;
-			n_regular = 8;
-			f_shoot = 0.3f;
-			speed = 2;
-			f_ovni = 0.2f;
-			cord_regular = new Cord(1,3);
-			cord_destroyer = new Cord(3,4);
-		}
-		else
-		{
-			n_destroyer = 4;
-			n_regular = 12;
-			f_shoot = 0.5f;
-			speed = 1;
-			f_ovni = 1f;
-			cord_regular = new Cord(1,3);
-			cord_destroyer = new Cord(4,3);
-		}
+
+	EASY(4, 2, 0.2, 3, 0.5, 1), HARD(8, 4, 0.3, 2, 0.2, 2), INSANE(12, 4, 0.5, 1, 0.1, 3);
+
+	private int numRegularAliens;
+	private int numDestroyerAliens;
+	private int numCyclesToMoveOneCell;
+	private double ovniFrequency;
+	private double shootFrequency;
+	private int numRowsOfRegularAliens;
+
+	private Level(int numRegularAliens, int numDestroyerAliens, double shootFrequency, int numCyclesToMoveOneCell,
+			double ovniFrequency, int numRowsOfRegularAliens) {
+
+		this.numRegularAliens = numRegularAliens;
+		this.numDestroyerAliens = numDestroyerAliens;
+		this.shootFrequency = shootFrequency;
+		this.numCyclesToMoveOneCell = numCyclesToMoveOneCell;
+		this.ovniFrequency = ovniFrequency;
+		this.numRowsOfRegularAliens = numRowsOfRegularAliens;
 	}
-	public int get_n_destroyer()
-	{
-		return (n_destroyer);
+
+	public int getNumRegularAliens() {
+		return numRegularAliens;
 	}
-	public int get_n_regular()
-	{
-		return (n_regular);
+
+	public int getNumDestroyerAliens() {
+		return numDestroyerAliens;
 	}
-	public float get_f_shoot()
-	{
-		return (f_shoot);
+
+	public Double getShootFrequency() {
+		return shootFrequency;
 	}
-	public int get_speed()
-	{
-		return (speed);
+
+	public int getNumCyclesToMoveOneCell() {
+		return numCyclesToMoveOneCell;
 	}
-	public float get_f_ovni()
-	{
-		return (f_ovni);
+
+	public Double getOvniFrequency() {
+		return ovniFrequency;
 	}
-	public Cord get_cord_destroyer()
-	{
-		return (cord_destroyer);
+
+	public int getNumRowsOfRegularAliens() {
+		return numRowsOfRegularAliens;
 	}
-	public Cord get_cord_regular()
-	{
-		return (cord_regular);
+
+	public int getNumRegularAliensPerRow() {
+		return numRegularAliens / numRowsOfRegularAliens;
 	}
+
+	public int getNumDestroyerAliensPerRow() {
+		return getNumDestroyerAliens();
+	}
+
+	public static Level fromParam(String param) {
+		for (Level level : Level.values())
+			if (level.name().equalsIgnoreCase(param))
+				return level;
+		return EASY;
+	}
+
+	public Double getTurnExplodeFreq() {
+		return 0.05;
+	}
+
 }

@@ -27,7 +27,7 @@ public class MoveCommand extends Command {
 
 	@Override
 	public Command parse(String[] commandWords) {
-		if(commandWords[0].contentEquals("m") || commandWords[0].contentEquals("move"))
+		if((commandWords[0].contentEquals("m") || commandWords[0].contentEquals("move")) && commandWords.length == 3)
 		{
 			if(commandWords[0].contentEquals("m") || commandWords[0].contentEquals("move"))
 			{

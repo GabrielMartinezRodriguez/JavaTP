@@ -1,217 +1,141 @@
 package tp.p1.logic;
-import tp.p1.util.*;
 
 import java.util.Random;
 
-import tp.p1.logic.lists.*;
-import tp.p1.logic.objects.*;
+import tp.p1.logic.lists.GameObjectBoard;
+import tp.p1.logic.objects.IPlayerController;
+import tp.p1.logic.objects.UCMShip;
+import tp.p1.util.Cord;
 
-public class Game {
-	
-	DestroyerShipList Destroyers;
-	RegularShipList Regulars;
-	BombList Bombs;
-	Ovni Ovni;
-	UCMShip Ship;
-	Level level;
-	Move move;
-	int puntosOvni;
-	public Game()
-	{
-		
-	}
-	public void move()
-	{
-		move.move(Destroyers, Regulars);
-	}
-	public String toString()
-	{
-		int vivos;
-		int puntos;
-		
-		puntos = 0;
-		puntos = Destroyers.ContarMuertos() * 10 +  Regulars.ContarMuertos() * 5 + puntosOvni;
- 		vivos = Destroyers.ContarVivos() + Regulars.ContarVivos();
-		
-		String Informacion = new String("Life: ");
-		Informacion = Informacion + Ship.get_life() + "\nNumber of cycles: ";
-		Informacion = Informacion + move.get_ciclos() + "\nPoints: ";
-		
-		Informacion = Informacion + puntos + "\nRemaining aliens: "; 
-		Informacion = Informacion + vivos + "\nShockWave: ";
-		
-		if(Ship.get_shockwave())
-			Informacion = Informacion + "SI";
-		else
-			Informacion = Informacion + "NO";
-		Informacion = Informacion + "\n\n\n";
-		GamePrinter print = new GamePrinter(this,8,9);
-		return (Informacion + print.toString());
-	}
-	public void initGame(String Level)
-	{
-		puntosOvni = 0;
-		if(Level.contentEquals("easy"))
-			level = level.EASY;
-		else if(Level.contentEquals("hard"))
-			level = level.HARD;
-		else
-			level = level.INSANE;
-		
-		level.ini_level();
-		Destroyers = new DestroyerShipList(level);
-		Regulars = new RegularShipList(level);
-		Ovni = new Ovni(level);
-		Bombs = new BombList(level);
-		Ship = new UCMShip();
-		move = new Move(level);
-	}
-	public void Update()
-	{
-		Ship.AvanzarLaser();
-		TestLaser();
-		TestBombs();
-		Ovni.move();
-		move();
-		TestLaser();
-		
-	}
-	public void ComputerAction(Random rand)
-	{
-		AlienShoot(rand);
-		Ovni.generation(rand);
-		
-	}
-	public String toStringObjectAt(int i, int j)
-	{
-		int pos;
-		String casilla = "    ";
+public class Game implements IPlayerController {
 
-		if(Bombs.is_bomb(i, j) != -1)
-		{
-			pos = Bombs.is_bomb(i, j);
-			casilla = Bombs.dibujar(pos);
-		}
-		if(Ship.ImHere(j, i))
-			casilla = Ship.toString();
-		if(Ship.LaserIsHere(j, i))
-			casilla = Ship.PrintLaser();
-		if(Destroyers.is_destroyer(i, j) != -1)
-		{
-			pos = Destroyers.is_destroyer(i, j);
-			casilla = Destroyers.dibujar(pos);
-		}
-		if(Regulars.is_regular(i, j) != -1)
-		{
-			pos = Regulars.is_regular(i, j);
-			casilla = Regulars.dibujar(pos);
-		}
-		
-		if(Ovni.ImHere(j, i))
-			casilla = Ovni.toString();
-		return (casilla);
+	public Game() {
+		// TODO Auto-generated constructor stub
 	}
-	
-	public void c_Move(int key)
-	{
-		Ship.move(key);
+
+	public final static int DIM_X = 9;
+	public final static int DIM_Y = 8;
+
+	private int currentCycle;
+	private Random rand;
+	private Level level;
+
+	GameObjectBoard board;
+
+	private UCMShip player;
+
+	private boolean doExit;
+	private BoardInitializer initializer;
+
+	public Game (Level level, Random random){
+		this. rand = random;
+		this.level = level;
+		initializer = new BoardInitializer();
+		initGame();
 	}
-	public void c_Shoot()
-	{
-		Ship.shoot();
+
+	public void initGame () {
+		currentCycle = 0;
+		board = initializer.initialize (this, level);
+		player = new UCMShip(this, DIM_X / 2, DIM_Y − 1);
+		board.add(player);
 	}
-	public void c_ShockWave()
-	{
-		if(Ship.get_shockwave())
-		{
-			Destroyers.ShockWave();
-			Regulars.ShockWave();
-			Ship.set_shockwave(false);
-		}
+
+	public Random getRandom() {
+		return rand;
 	}
-	public void c_move(int key)
-	{
-		Ship.move(key);
+
+	public Level getLevel() {
+		return level;
 	}
-	public void c_reset()
-	{
-		String s_level;
-		if(level.EASY == level)
-			s_level = "easy";
-		else if(level.HARD == level)
-			s_level = "hard";
-		else 
-			s_level = "insane";
-		initGame(s_level);
+
+	public void reset() {
+		initGame();
 	}
-	public void c_exit()
-	{
-		System.out.println("GAME OVER\n");
-		System.exit(0);
+
+	public void addObject(GameObject object) {
+		board.add(object);
 	}
-	public void c_help()
-	{
-		System.out.println(
-				"Command > help\r\n" + 
-				"move <left|right><1|2>: Moves UCM-Ship to the indicated direction.\r\n" + 
-				"shoot: UCM-Ship launches a missile.\r\n" + 
-				"shockWave: UCM-Ship releases a shock wave.\r\n" + 
-				"list: Prints the list of available ships.\r\n" + 
-				"reset: Starts a new game.\r\n" + 
-				"help: Prints this help message.\r\n" + 
-				"exit: Terminates the program.\r\n" + 
-				"[none]: Skips one cycle.\r\n" + 
-				"");
+
+	public String positionToString( /∗ coordinadas ∗/ ) {
+	return board.toString( /∗ coordinadas ∗/ );
 	}
-	public void c_list()
-	{
-		System.out.println(
-				"[R]egular ship: Points: 5 - Harm: 0 - Shield: 2\r\n" + 
-				"[D]estroyer ship: Points: 10 - Harm: 1 - Shield: 1\r\n" + 
-				"[O]vni: Points: 25 - Harm: 0 - Shield: 1\r\n" + 
-				"^__^: Harm: 1 - Shield: 3");
+
+	public boolean isFinished() {
+		return playerWin() || aliensWin() || doExit;
 	}
-	public void c_error()
-	{
-		System.out.println("Invalid command");
+
+	public boolean aliensWin() {
+		return !player.isAlive() || AlienShip.haveLanded();
 	}
-	
-	public void TestLaser()
-	{
-		
-		puntosOvni += Ship.test(Destroyers, Regulars, Bombs, Ovni);
+
+	private boolean playerWin() {
+		return AlienShip.allDead();
 	}
-	public void TestBombs()
-	{
-		int pos;
-		Bombs.avanzar();
-		if(Bombs.is_bomb(7, Ship.get_col()) != -1) {
-			pos = Bombs.is_bomb(7, Ship.get_col());
-			Ship.Hurt();
-			Bombs.eliminate_bomb(pos);
-		}
+
+	public void update() {
+		board.computerAction();
+		board.update();
+		currentCycle += 1;
 	}
-	public void AlienShoot(Random rand)
-	{
-		Destroyers.AlienShoot(rand, Bombs);
+
+	public boolean isOnBoard(Cord cord) {
+		return (board.isInBoard(cord));
 	}
-	public int Fin()
-	{
-		int ganador;
-		ganador = 0;
-		if((Destroyers.ContarVivos() + Regulars.ContarVivos()) == 0) 
-			ganador = 1;
+
+	public void exit() {
+		doExit = true;
+	}
+
+	public String infoToString() {
+		return /∗ cadena estado−juego para imprimir junto con el tablero ∗/;
+	}
+
+	public String getWinnerMessage() {
+		if (playerWin())
+			return "Player win!";
+		else if (aliensWin())
+			return "Aliens win!";
+		else if (doExit)
+			return "Player exits the game";
 		else
-		{
-			for(int i = 0; i < 9; i++)
-			{
-				if(Destroyers.is_destroyer(7, i) != -1 || Regulars.is_regular(7, i)  != -1)
-					ganador = -1;
-			}
-			if(Ship.get_life() < 1)
-				ganador = -1;
-		}
-		return (ganador);
+			return "This should not happen";
 	}
-	
+
+	@Override
+	public boolean move(int numCells) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean shootMissile() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean shockWave() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void receivePoints(int points) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void enableShockWave() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void enableMissile() {
+		// TODO Auto-generated method stub
+
+	}
+
 }

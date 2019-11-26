@@ -8,7 +8,9 @@ public class CommandGenerator
         new ResetCommand(),
         new ExitCommand(),
         new MoveCommand(),
-        new ShockwaveCommand()
+        new ShockwaveCommand(),
+        new ShootCommand(),
+        new NoneCommand()
     };
 
     public static Command parseCommand(String[] commandWords)

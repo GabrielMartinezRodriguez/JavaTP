@@ -32,13 +32,14 @@ public class Control {
 					System.out.print("Command >");
 					words = in.nextLine().toLowerCase().trim().split("\\s+");
 					command = CommandGenerator.parseCommand(words);
+					
 					if(command != null)
 						mod_game = command.execute(juego);
 					else
 						System.out.println("Comando desconocido");
 				}
-				juego.ComputerAction(rand);
-				juego.Update();
+				juego.computerAction(rand);
+				juego.update();
 			}
 			else
 				flag = false;

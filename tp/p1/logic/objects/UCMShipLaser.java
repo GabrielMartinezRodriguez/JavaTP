@@ -1,31 +1,19 @@
 package tp.p1.logic.objects;
 
-import tp.p1.util.*;
+import tp.p1.logic.Game;
+import tp.p1.util.Cord;
 
-public class UCMShipLaser {
-	private Cord cord;
-	
-	public UCMShipLaser(int row, int col)
-	{
-		cord = new Cord(row,col);
+public class UCMShipLaser extends Weapon {
+
+	public UCMShipLaser(Game game, Cord cord, int live) {
+		super(game, cord, live);
+		// TODO Auto-generated constructor stub
 	}
-	public String toString() 
-	{
-		return (" oo ");
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
-	public boolean ImHere(int col, int row)
-	{
-		if(cord.get_col() == col && cord.get_row() == row)
-			return (true);
-		else
-			return (false);
-	}
-	public Cord get_cord()
-	{
-		return (cord);
-	}
-	public void avanzar()
-	{
-		cord.set_row(cord.get_row() - 1);
-	}
+
 }
