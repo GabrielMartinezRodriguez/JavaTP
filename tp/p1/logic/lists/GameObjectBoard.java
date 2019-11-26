@@ -9,7 +9,7 @@ public class GameObjectBoard {
 	private int currentObjects;
 
 	public GameObjectBoard (int width, int height) {
-	// TODO implement
+		
 	}
 	private int getCurrentObjects () {
 		return (currentObjects);
