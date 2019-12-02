@@ -1,6 +1,12 @@
 package tp.p1.logic.lists;
 
+import tp.p1.logic.objects.Bomb;
+import tp.p1.logic.objects.DestroyerShip;
 import tp.p1.logic.objects.GameObject;
+import tp.p1.logic.objects.Ovni;
+import tp.p1.logic.objects.RegularShip;
+import tp.p1.logic.objects.UCMShip;
+import tp.p1.logic.objects.UCMShipLaser;
 import tp.p1.util.Cord;
 
 public class GameObjectBoard {
@@ -29,9 +35,9 @@ public class GameObjectBoard {
 		int i;
 		
 		i = 0;
-		while(i < objects.length)
+		while(i < currentObjects)
 		{
-			if(objects[i].isOnPosition(cord))
+			if(objects[i].isOnPosition(cord) && objects[i].isAlive())
 				return(objects[i]);
 			i++;
 		}
@@ -42,7 +48,7 @@ public class GameObjectBoard {
 		int i;
 	
 		i = 0;
-		while(i < objects.length)
+		while(i < currentObjects)
 		{
 			if(objects[i].isOnPosition(cord))
 				return (i);
@@ -55,7 +61,7 @@ public class GameObjectBoard {
 		int i;
 	
 		i = 0;
-		while(i < objects.length)
+		while(i < currentObjects)
 		{
 			if(objects[i] == object)
 				objects[i].onDelete();
@@ -63,7 +69,13 @@ public class GameObjectBoard {
 		}
 	}
 	public void update() {
-	// TODO implement
+		moveLaser();
+		testLaser();
+		moveBombs();
+		testBombs();
+		ovniMove();
+		alienMove();
+		testLaser();
 	}
 	private void checkAttacks(GameObject object) {
 	// TODO implement
@@ -75,13 +87,112 @@ public class GameObjectBoard {
 	// TODO implement
 	}
 	public String toString(Cord cord) {
-		String picture;
+		GameObject picture;
 
-		picture = getObjectInPosition(cord).toString();
+		picture = getObjectInPosition(cord);
 		if(picture != null)
-			return(picture);
+			return(picture.toString());
 		else
 			return("    ");
 	}
-
+	
+	public void moveLaser()
+	{
+		int i;
+		boolean flag;
+		
+		i = 0;
+		flag = true;
+		while(i < currentObjects && flag)
+		{
+			if(objects[i].getClass() == UCMShipLaser.class)
+					flag = false;
+			i++;
+		}
+		objects[i - 1].move();
+	}
+	public void testLaser()
+	{
+		int i;
+		int j;
+		boolean flag;
+		
+		i = 0;
+		flag = true;
+		while(i < currentObjects && flag)
+		{
+			if(objects[i].getClass() == UCMShipLaser.class)
+					flag = false;
+			i++;
+		}
+		i--;
+		j = 0;
+		while(j < currentObjects)
+		{
+			if(objects[j].getClass() == Bomb.class || objects[j].getClass() == DestroyerShip.class ||
+					objects[j].getClass() == RegularShip.class || objects[j].getClass() == Ovni.class)
+			{
+				objects[i].performAttack(objects[j]);
+			}
+			j++;
+		}
+	}
+	public void moveBombs()
+	{
+		int i;
+		
+		i = 0;
+		while(i < currentObjects)
+		{
+			if(objects[i].getClass() == Bomb.class)
+				objects[i].move();
+			i++;
+		}
+		
+	}
+	public void testBombs(){
+		int i;
+		int j;
+		boolean flag;
+	
+		i = 0;
+		j = 0;
+		flag = true;
+		while(i < currentObjects && flag)
+		{
+			if(objects[i].getClass() == UCMShip.class)
+					flag = false;
+			i++;
+		}
+		i--;
+		j = 0;
+		while(j < currentObjects)
+		{
+			if(objects[j].getClass() == UCMShip.class)
+				objects[j].performAttack(objects[i]);
+			j++;
+		}
+	}
+	
+	public void ovniMove()
+	{
+		int 	i;
+		boolean flag;
+	
+		i = 0;
+		flag = true;
+		while(i < currentObjects && flag)
+		{
+			if(objects[i].getClass() == Ovni.class)
+				flag = false;
+			i++;
+		}
+		i--;
+		if(objects[i].getLive() > 0)
+			objects[i].move();
+	}
+	public void alienMove()
+	{
+		
+	}
 }

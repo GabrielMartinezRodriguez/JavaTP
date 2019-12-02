@@ -38,10 +38,16 @@ public class Game implements IPlayerController {
 	public void initGame () {
 		currentCycle = 0;
 		board = initializer.initialize (this, level);
-		player = new UCMShip(this, new Cord(DIM_Y − 1, DIM_X / 2));
+		player = new UCMShip(this, new Cord(DIM_Y - 1, DIM_X / 2));
 		board.add(player);
 	}
-
+	
+	public String toString()
+	{
+		GamePrinter print = new GamePrinter(this, DIM_Y, DIM_X);
+		return print.toString();
+	}
+	
 	public Random getRandom() {
 		return rand;
 	}
@@ -59,7 +65,7 @@ public class Game implements IPlayerController {
 	}
 
 	public String positionToString(Cord cord) {
-	return board.toString(cord);
+		return board.toString(cord);
 	}
 	public String toStringObjectAt(int i, int j)
 	{

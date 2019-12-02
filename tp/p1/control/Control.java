@@ -6,12 +6,12 @@ import java.util.*;
 public class Control {
 	private Game juego;
 	private Scanner in;
-
-	public Control(String Level)
+	private Random rand;
+	public Control(Level Level)
 	{
 		in = new Scanner(System.in);
-		juego = new Game();
-		juego.initGame(Level);
+		juego = new Game(Level, rand);
+		juego.initGame();
 	}
 	public void run(Random rand)
 	{
@@ -24,7 +24,7 @@ public class Control {
 		while(flag)
 		{
 			System.out.println(juego);
-			if(juego.Fin() == 0)
+			if(true)//if(juego.Fin() == 0)
 			{
 				mod_game = false;
 				while(mod_game == false)
@@ -38,14 +38,13 @@ public class Control {
 					else
 						System.out.println("Comando desconocido");
 				}
-				juego.computerAction(rand);
 				juego.update();
 			}
 			else
 				flag = false;
 			
 		}
-		if(juego.Fin() == 1)
+		if(true)//if(juego.Fin() == 1)
 			System.out.println("PLAYER WIN");
 		else
 			System.out.println("ALIEN WIN");

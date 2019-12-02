@@ -14,5 +14,9 @@ public class Bomb extends Weapon {
 	public String toString() {
 		return (" .  ");
 	}
-
+	
+	public void move()
+	{
+		cord.set_row(cord.get_row() - 1);
+	}
 }

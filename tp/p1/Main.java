@@ -1,38 +1,31 @@
 package tp.p1;
 import java.util.*;
 import tp.p1.control.*;
+import tp.p1.logic.Level;
 
 public class Main {
 	public static void main(String[] Args)
 	{
 		long seed;
-		String Level;
-		boolean Correct;
+		String levelString;
+		Level level;
 		Control control;
 		Random rand = new Random();
-		
-		Correct = true;
+	
+		level = Level.EASY;
 		seed = rand.nextInt();
 		if(Args.length == 2)
 			seed = Integer.parseInt(Args[1]);
-		Level = Args[0].toLowerCase();
+		levelString = Args[0].toLowerCase();
+		if(levelString.contentEquals("easy"))
+			level = Level.EASY;
+		else if(levelString.contentEquals("hard"))
+			level = Level.HARD;
+		else if(levelString.contentEquals("insane"))
+			level = Level.INSANE;
 		
-		if(!Level.contentEquals("easy"))
-		{
-			if(!Level.contentEquals("hard"))
-			{
-				if(!Level.contentEquals("insane"))
-					Correct = false;
-			}
-		}
-		
-		if(Correct)
-		{
-			control  = new Control(Level);
-			rand.setSeed(seed);
-			control.run(rand);
-		}
-		else
-			System.out.println("ERROR EN LOS ARGUMENTOS");
+		control  = new Control(level);
+		rand.setSeed(seed);
+		control.run(rand);
 	}
 }

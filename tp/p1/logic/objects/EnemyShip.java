@@ -12,4 +12,7 @@ public class EnemyShip extends Ship {
 		// TODO Auto-generated constructor stub
 	}
 
+	public int getPoints() {
+		return points;
+	}
 }

@@ -16,4 +16,8 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 	static boolean canGenerateRandomOvni(Game game){
 		return game.getRandom().nextDouble() < game.getLevel().getOvniFrequency();
 	}
+	public void move()
+	{
+		cord.set_col(cord.get_col() - 1);
+	}
 }

@@ -36,7 +36,7 @@ public class BoardInitializer {
 		{
 			for(int j = 0; j < level.getNumRegularAliensPerRow(); j++)
 			{
-				board.add(new RegularShip(game, cord, 3));
+				board.add(new RegularShip(game, new Cord(cord), 3));
 				cord.set_col(cord.get_col() + 1);
 			}
 			cord.set_row(cord.get_row() + 1);
@@ -45,10 +45,15 @@ public class BoardInitializer {
 	}
 
 	private void initializeDestroyerAliens() {
-		Cord cord = new Cord(1 + level.getNumRowsOfRegularAliens(), (game.DIM_X - 1)/2 - 1);
+		int desplazamiento;
+		if(level != Level.INSANE)
+			desplazamiento = 0;
+		else
+			desplazamiento = 1;
+		Cord cord = new Cord(1 + level.getNumRowsOfRegularAliens(), (game.DIM_X - 1)/2 - desplazamiento);
 		for(int i = 0; i < level.getNumDestroyerAliensPerRow(); i++)
 		{
-			board.add(new DestroyerShip(game, cord, 3));
+			board.add(new DestroyerShip(game, new Cord(cord), 3, board));
 			cord.set_col(cord.get_col() + 1);
 		}
 	}

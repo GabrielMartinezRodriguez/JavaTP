@@ -9,6 +9,11 @@ public class Cord {
 		this.row = row;
 		this.col = col;
 	}
+	public Cord(Cord cord)
+	{
+		this.row = cord.get_row();
+		this.col = cord.get_col();
+	}
 	public int get_row()
 	{
 		return (row);
@@ -24,5 +29,11 @@ public class Cord {
 	public void set_col(int col)
 	{
 		this.col = col;
+	}
+	public boolean equals(Cord cmp)
+	{
+		if(row == cmp.get_row() && col == cmp.get_col())
+			return true;
+		return false;
 	}
 }

@@ -14,5 +14,8 @@ public class UCMShipLaser extends Weapon {
 	public String toString() {
 		return (" oo ");
 	}
-
+	public void move()
+	{
+		cord.set_row(cord.get_row() + 1);
+	}
 }

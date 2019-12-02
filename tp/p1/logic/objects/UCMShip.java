@@ -5,9 +5,12 @@ import tp.p1.util.Cord;
 
 public class UCMShip extends Ship {
 
+	protected UCMShipLaser laser;
 	public UCMShip(Game game, Cord cord) {
 		super(game, cord, 3);
-		// TODO Auto-generated constructor stub
+		laser = new UCMShipLaser(game, cord, 0);
+		game.addObject(laser);
+		
 	}
 	public String toString()
 	{
