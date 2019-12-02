@@ -3,6 +3,7 @@ package tp.p1.logic;
 import java.util.Random;
 
 import tp.p1.logic.lists.GameObjectBoard;
+import tp.p1.logic.objects.GameObject;
 import tp.p1.logic.objects.IPlayerController;
 import tp.p1.logic.objects.UCMShip;
 import tp.p1.util.Cord;
@@ -37,7 +38,7 @@ public class Game implements IPlayerController {
 	public void initGame () {
 		currentCycle = 0;
 		board = initializer.initialize (this, level);
-		player = new UCMShip(this, DIM_X / 2, DIM_Y − 1);
+		player = new UCMShip(this, new Cord(DIM_Y − 1, DIM_X / 2));
 		board.add(player);
 	}
 
@@ -57,10 +58,14 @@ public class Game implements IPlayerController {
 		board.add(object);
 	}
 
-	public String positionToString( /∗ coordinadas ∗/ ) {
-	return board.toString( /∗ coordinadas ∗/ );
+	public String positionToString(Cord cord) {
+	return board.toString(cord);
 	}
-
+	public String toStringObjectAt(int i, int j)
+	{
+		Cord cord = new Cord(i, j);
+		return(positionToString(cord));
+	}
 	public boolean isFinished() {
 		return playerWin() || aliensWin() || doExit;
 	}

@@ -5,6 +5,8 @@ import tp.p1.util.Cord;
 
 public class EnemyShip extends Ship {
 
+	protected int points;
+
 	public EnemyShip(Game game, Cord cord, int live) {
 		super(game, cord, live);
 		// TODO Auto-generated constructor stub

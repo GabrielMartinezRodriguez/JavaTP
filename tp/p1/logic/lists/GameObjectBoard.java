@@ -9,13 +9,15 @@ public class GameObjectBoard {
 	private int currentObjects;
 
 	public GameObjectBoard (int width, int height) {
-		
+		objects = new GameObject[width * height];
+		currentObjects = 0;
 	}
-	private int getCurrentObjects () {
+	private int getCurrentObjects (){
 		return (currentObjects);
 	}
 	public void add (GameObject object) {
-	// TODO implement
+		objects[currentObjects] = object;
+		currentObjects++;
 	}
 	public boolean isInBoard(Cord cord)
 	{
@@ -67,13 +69,19 @@ public class GameObjectBoard {
 	// TODO implement
 	}
 	public void computerAction() {
-	// TODO implement
+		
 	}
 	private void removeDead() {
 	// TODO implement
 	}
 	public String toString(Cord cord) {
-	// TODO implement
+		String picture;
+
+		picture = getObjectInPosition(cord).toString();
+		if(picture != null)
+			return(picture);
+		else
+			return("    ");
 	}
 
 }
