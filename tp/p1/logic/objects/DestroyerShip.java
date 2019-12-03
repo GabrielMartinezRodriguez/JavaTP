@@ -18,7 +18,17 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions{
 	{
 		return ("D["+live+"]");
 	}
-	static boolean canGenerateRandomBomb(Game game){
+	public static boolean canGenerateRandomBomb(Game game){
 		return game.getRandom().nextDouble() < game.getLevel().getShootFrequency();
+	}
+	public void computerAction()
+	{
+		Cord cpy;
+		if(!bomb.isAlive() && isAlive())
+		{
+			cpy = new Cord(this.cord);
+			bomb.setCord(cpy);
+			bomb.onDelete();
+		}
 	}
 }

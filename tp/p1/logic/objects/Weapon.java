@@ -16,10 +16,8 @@ public abstract class Weapon extends GameObject {
 
 	}
 
-	@Override
 	public void onDelete() {
-		// TODO Auto-generated method stub
-
+		live = 1;
 	}
 
 	@Override

@@ -16,6 +16,15 @@ public class UCMShipLaser extends Weapon {
 	}
 	public void move()
 	{
-		cord.set_row(cord.get_row() + 1);
+		cord.set_row(cord.get_row() - 1);
+	}
+	public boolean performAttack(GameObject other){
+		if(other.getCord().equals(this.cord) && this.isAlive() && other.isAlive())
+		{
+			this.live = -1;
+			other.receiveMissileAttack(1);
+			return true;
+		}
+		return false;
 	}
 }

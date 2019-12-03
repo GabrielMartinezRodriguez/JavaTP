@@ -5,17 +5,36 @@ import tp.p1.util.Cord;
 
 public class Shockwave extends Weapon {
 
-	boolean enable;
+	protected boolean enable;
 
 	public Shockwave(Game game, Cord cord, int live) {
 		super(game, cord, live);
-		// TODO Auto-generated constructor stub
+		enable =  false;
 	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return null;
 	}
-
+	public boolean performAttack(GameObject other){
+		if(other.isAlive())
+		{
+			this.live = -1;
+			other.receiveShockWaveAttack(1);
+			return true;
+		}
+		return false;
+	}
+	public void enable()
+	{
+		enable = true;
+	}
+	public void useShockWave()
+	{
+		enable = false;
+	}
+	public boolean getEnable()
+	{
+		return (enable);
+	}
 }

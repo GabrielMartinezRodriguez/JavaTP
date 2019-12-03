@@ -7,13 +7,13 @@ public class Control {
 	private Game juego;
 	private Scanner in;
 	private Random rand;
-	public Control(Level Level)
+	public Control(Level Level, Random rand)
 	{
 		in = new Scanner(System.in);
 		juego = new Game(Level, rand);
 		juego.initGame();
 	}
-	public void run(Random rand)
+	public void run()
 	{
 		boolean mod_game; 
 		boolean flag;
@@ -24,7 +24,7 @@ public class Control {
 		while(flag)
 		{
 			System.out.println(juego);
-			if(true)//if(juego.Fin() == 0)
+			if(!juego.isFinished())
 			{
 				mod_game = false;
 				while(mod_game == false)

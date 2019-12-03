@@ -26,12 +26,12 @@ public class BoardInitializer {
 	}
 
 	private void initializeOvni() {
-		Cord cord = new Cord(0, game.DIM_X);
+		Cord cord = new Cord(0, Game.DIM_X);
 		board.add(new Ovni(game, cord, 1));
 	}
 
 	private void initializeRegularAliens() {
-		Cord cord = new Cord(1, (game.DIM_X - 1)/2 - 1);
+		Cord cord = new Cord(1, (Game.DIM_X - 1)/2 - 1);
 		for(int i = 0; i < level.getNumRowsOfRegularAliens(); i++)
 		{
 			for(int j = 0; j < level.getNumRegularAliensPerRow(); j++)
@@ -40,7 +40,7 @@ public class BoardInitializer {
 				cord.set_col(cord.get_col() + 1);
 			}
 			cord.set_row(cord.get_row() + 1);
-			cord.set_col((game.DIM_X - 1)/2 - 1);
+			cord.set_col((Game.DIM_X - 1)/2 - 1);
 		}
 	}
 

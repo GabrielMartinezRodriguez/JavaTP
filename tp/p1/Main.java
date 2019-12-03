@@ -24,8 +24,8 @@ public class Main {
 		else if(levelString.contentEquals("insane"))
 			level = Level.INSANE;
 		
-		control  = new Control(level);
+		control  = new Control(level, rand);
 		rand.setSeed(seed);
-		control.run(rand);
+		control.run();
 	}
 }

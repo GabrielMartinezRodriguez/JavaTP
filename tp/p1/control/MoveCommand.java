@@ -15,13 +15,13 @@ public class MoveCommand extends Command {
 	@Override
 	public boolean execute(Game game) {
 		if(name.contentEquals("left 1"))
-			game.c_move(0);
+			game.move(-1);
 		else if(name.contentEquals("left 2"))
-			game.c_move(3);
+			game.move(-2);
 		else if(name.contentEquals("right 1"))
-			game.c_move(1);
+			game.move(1);
 		else if(name.contentEquals("right 2"))
-			game.c_move(2);
+			game.move(2);
 		return true;
 	}
 

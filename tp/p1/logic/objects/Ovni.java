@@ -13,11 +13,19 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 	{
 		return ("O["+live+"]");
 	}
-	static boolean canGenerateRandomOvni(Game game){
+	public static boolean canGenerateRandomOvni(Game game){
 		return game.getRandom().nextDouble() < game.getLevel().getOvniFrequency();
 	}
 	public void move()
 	{
 		cord.set_col(cord.get_col() - 1);
+	}
+	public void computerAction()
+	{
+		if(!isAlive())
+		{
+			cord = new Cord(0, Game.DIM_X);
+			live = 1;
+		}
 	}
 }

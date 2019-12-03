@@ -17,6 +17,10 @@ public abstract class GameObject implements IAttack {
 	{
 		return (this.cord);
 	}
+	public void setCord(Cord cord)
+	{
+		this.cord = cord;
+	}
 	public boolean isAlive() {
 		return this.live > 0;
 	}
@@ -36,7 +40,6 @@ public abstract class GameObject implements IAttack {
 	public boolean isOut() {
 		return !game.isOnBoard(this.cord);
 	}
-
 	public abstract void computerAction();
 
 	public abstract void onDelete();
@@ -44,4 +47,20 @@ public abstract class GameObject implements IAttack {
 	public abstract void move();
 
 	public abstract String toString();
+	
+	public boolean receiveMissileAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	};
+	public boolean receiveBombAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	};
+	public boolean receiveShockWaveAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	}
+	public Game getGame() {
+		return game;
+	}
 }

@@ -3,6 +3,7 @@ package tp.p1.logic;
 import java.util.Random;
 
 import tp.p1.logic.lists.GameObjectBoard;
+import tp.p1.logic.objects.AlienShip;
 import tp.p1.logic.objects.GameObject;
 import tp.p1.logic.objects.IPlayerController;
 import tp.p1.logic.objects.UCMShip;
@@ -31,6 +32,7 @@ public class Game implements IPlayerController {
 	public Game (Level level, Random random){
 		this. rand = random;
 		this.level = level;
+		doExit = false;
 		initializer = new BoardInitializer();
 		initGame();
 	}
@@ -77,13 +79,15 @@ public class Game implements IPlayerController {
 	}
 
 	public boolean aliensWin() {
-		return !player.isAlive() || AlienShip.haveLanded();
+		return !player.isAlive() || AlienShip.haveLanded(this);
 	}
 
 	private boolean playerWin() {
-		return AlienShip.allDead();
+		return AlienShip.allDead(this);
 	}
-
+	public GameObjectBoard getBoard(){
+		return (board);
+	}
 	public void update() {
 		board.computerAction();
 		board.update();
@@ -95,7 +99,8 @@ public class Game implements IPlayerController {
 	}
 
 	public void exit() {
-		doExit = true;
+		System.out.println("GAME OVER\n");
+		System.exit(0);
 	}
 
 	public String infoToString() {
@@ -112,22 +117,36 @@ public class Game implements IPlayerController {
 		else
 			return "This should not happen";
 	}
-
+	
 	@Override
 	public boolean move(int numCells) {
-		// TODO Auto-generated method stub
+		if(player.getCord().get_col() + numCells >= 0 
+			&& player.getCord().get_col() + numCells < Game.DIM_X)
+		{
+			player.getCord().set_col(player.getCord().get_col() + numCells);
+			return true;
+		}
 		return false;
+		
+	}
+	public void list()
+	{
+		System.out.println(
+				"[R]egular ship: Points: 5 - Harm: 0 - Shield: 2\r\n" + 
+				"[D]estroyer ship: Points: 10 - Harm: 1 - Shield: 1\r\n" + 
+				"[O]vni: Points: 25 - Harm: 0 - Shield: 1\r\n" + 
+				"^__^: Harm: 1 - Shield: 3");
 	}
 
 	@Override
 	public boolean shootMissile() {
-		// TODO Auto-generated method stub
-		return false;
+		return (player.shoot());
+		
 	}
 
 	@Override
 	public boolean shockWave() {
-		// TODO Auto-generated method stub
+		player.shockWave();
 		return false;
 	}
 
@@ -139,8 +158,7 @@ public class Game implements IPlayerController {
 
 	@Override
 	public void enableShockWave() {
-		// TODO Auto-generated method stub
-
+		player.enableShockWave();
 	}
 
 	@Override
@@ -149,4 +167,8 @@ public class Game implements IPlayerController {
 
 	}
 
+	public int getCurrentCycle() {
+		return currentCycle;
+	}
+	
 }
