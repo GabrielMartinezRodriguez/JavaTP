@@ -70,15 +70,15 @@ public class GameObjectBoard {
 	
 	private GameObject getObjectInPosition (Cord cord) {
 		int i;
-		
+		GameObject obj = null;
 		i = 0;
 		while(i < currentObjects)
 		{
-			if(objects[i].isOnPosition(cord) && objects[i].isAlive())
-				return(objects[i]);
+			if(objects[i].isOnPosition(cord) && (objects[i].isAlive() || objects[i].getClass() == UCMShip.class))
+				obj = objects[i];
 			i++;
 		}
-		return (null);
+		return (obj);
 		
 	}
 	private int getIndex(Cord cord) {
@@ -313,5 +313,18 @@ public class GameObjectBoard {
 					shock.performAttack(objects[i]);
 			}
 		}
+	}
+	
+	public int countAliens()
+	{
+		int cont;
+	
+		cont = 0;
+		for(int i = 0; i < currentObjects; i++)
+		{
+			if(objects[i].getClass() == RegularShip.class || objects[i].getClass() == DestroyerShip.class)
+				cont++;
+		}
+		return (cont);
 	}
 }

@@ -20,7 +20,7 @@ public abstract class Command {
 		this.details = details;
 		this.help = help;
 	}
-	public abstract boolean execute(Game game);
+	public abstract boolean execute(Game game) throws CommandExecuteException;
 
 	public abstract Command parse(String[] commandWords);
 

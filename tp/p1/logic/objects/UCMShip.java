@@ -1,5 +1,6 @@
 package tp.p1.logic.objects;
 
+import tp.p1.logic.CommandExecuteException;
 import tp.p1.logic.Game;
 import tp.p1.util.Cord;
 
@@ -20,9 +21,9 @@ public class UCMShip extends Ship {
 		if(live > 0)
 			return ("^__^");
 		else
-			return ("Â¡xxÂ¡");
+			return (" ¡xx¡  ");
 	}
-	public boolean shoot()
+	public boolean shoot() throws CommandExecuteException
 	{
 		if(!laser.isAlive())
 		{
@@ -32,18 +33,22 @@ public class UCMShip extends Ship {
 			return true;
 		}
 		else
-			return false;
+			throw new CommandExecuteException("NO TIENES DISPONIBLE ES DISPARO");
 	}
 	public void enableShockWave()
 	{
 		shockwave.enable();
 	}
-	public void shockWave()
+	public void shockWave() throws CommandExecuteException
 	{
 		if(shockwave.getEnable())
 		{
 			game.getBoard().shockWave(shockwave);
 			shockwave.useShockWave();
 		}
+		throw new CommandExecuteException("NO TIENES SHOCKWAVE TODAVIA");
+	}
+	public boolean getShockWave() {
+		return(shockwave.getEnable());
 	}
 }

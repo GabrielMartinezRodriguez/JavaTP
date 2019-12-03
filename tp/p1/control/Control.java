@@ -31,20 +31,23 @@ public class Control {
 				{
 					System.out.print("Command >");
 					words = in.nextLine().toLowerCase().trim().split("\\s+");
-					command = CommandGenerator.parseCommand(words);
+					try {
+						command = CommandGenerator.parseCommand(words);
 					
-					if(command != null)
-						mod_game = command.execute(juego);
-					else
-						System.out.println("Comando desconocido");
+						if(command != null)
+							mod_game = command.execute(juego);
+						else
+							System.out.println("Comando desconocido");
+					}catch(CommandExecuteException ex) {
+						System.out.format(ex.getMessage() + " %n %n");
+					}
 				}
 				juego.update();
 			}
 			else
 				flag = false;
-			
 		}
-		if(true)//if(juego.Fin() == 1)
+		if(!juego.aliensWin())
 			System.out.println("PLAYER WIN");
 		else
 			System.out.println("ALIEN WIN");

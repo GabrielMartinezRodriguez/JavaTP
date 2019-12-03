@@ -1,5 +1,6 @@
 package tp.p1.control;
 
+import tp.p1.logic.CommandExecuteException;
 import tp.p1.logic.Game;
 
 public class ShootCommand extends Command {
@@ -10,7 +11,7 @@ public class ShootCommand extends Command {
 	}
 
 	@Override
-	public boolean execute(Game game) {
+	public boolean execute(Game game) throws CommandExecuteException {
 		game.shootMissile();
 		return true;
 	}

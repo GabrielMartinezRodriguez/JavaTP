@@ -19,10 +19,18 @@ public class UCMShipLaser extends Weapon {
 		cord.set_row(cord.get_row() - 1);
 	}
 	public boolean performAttack(GameObject other){
+		EnemyShip alien;
+			
 		if(other.getCord().equals(this.cord) && this.isAlive() && other.isAlive())
 		{
 			this.live = -1;
 			other.receiveMissileAttack(1);
+			if(!other.isAlive() && (other.getClass() == Ovni.class || other.getClass() == DestroyerShip.class ||
+					other.getClass() == RegularShip.class))
+			{
+				alien = (EnemyShip)other;
+				game.setPoints(game.getPoints() + alien.getPoints());
+			}
 			return true;
 		}
 		return false;

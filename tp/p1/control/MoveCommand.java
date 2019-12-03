@@ -1,5 +1,6 @@
 package tp.p1.control;
 
+import tp.p1.logic.CommandExecuteException;
 import tp.p1.logic.Game;
 
 public class MoveCommand extends Command {
@@ -13,7 +14,7 @@ public class MoveCommand extends Command {
 		// TODO Auto-generated constructor stub
 	}
 	@Override
-	public boolean execute(Game game) {
+	public boolean execute(Game game) throws CommandExecuteException {
 		if(name.contentEquals("left 1"))
 			game.move(-1);
 		else if(name.contentEquals("left 2"))

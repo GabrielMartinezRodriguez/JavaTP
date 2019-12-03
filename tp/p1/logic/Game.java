@@ -2,6 +2,7 @@ package tp.p1.logic;
 
 import java.util.Random;
 
+import java.lang.*;
 import tp.p1.logic.lists.GameObjectBoard;
 import tp.p1.logic.objects.AlienShip;
 import tp.p1.logic.objects.GameObject;
@@ -26,6 +27,7 @@ public class Game implements IPlayerController {
 
 	private UCMShip player;
 
+	private int points;
 	private boolean doExit;
 	private BoardInitializer initializer;
 
@@ -47,7 +49,7 @@ public class Game implements IPlayerController {
 	public String toString()
 	{
 		GamePrinter print = new GamePrinter(this, DIM_Y, DIM_X);
-		return print.toString();
+		return infoToString() + print.toString();
 	}
 	
 	public Random getRandom() {
@@ -104,7 +106,19 @@ public class Game implements IPlayerController {
 	}
 
 	public String infoToString() {
-		return /∗ cadena estado−juego para imprimir junto con el tablero ∗/;
+		String info = new String("");
+
+		info += "Life: " + player.getLive() + "\n";
+		info += "Number of cycles: " + currentCycle + "\n";
+		info += "Points: " + points + "\n";
+		info += "Remaining aliens: " + board.countAliens() + "\n";
+		info += "Shockwave ";
+		if(player.getShockWave())
+			info += "Si";
+		else
+			info += "NO";
+		info += "\n\n\n";
+		return (info);
 	}
 
 	public String getWinnerMessage() {
@@ -119,14 +133,14 @@ public class Game implements IPlayerController {
 	}
 	
 	@Override
-	public boolean move(int numCells) {
+	public boolean move(int numCells) throws CommandExecuteException {
 		if(player.getCord().get_col() + numCells >= 0 
 			&& player.getCord().get_col() + numCells < Game.DIM_X)
 		{
 			player.getCord().set_col(player.getCord().get_col() + numCells);
 			return true;
 		}
-		return false;
+		throw new CommandExecuteException("NO PUEDES TRASPASAR PAREDES :(");
 		
 	}
 	public void list()
@@ -139,13 +153,13 @@ public class Game implements IPlayerController {
 	}
 
 	@Override
-	public boolean shootMissile() {
+	public boolean shootMissile() throws CommandExecuteException {
 		return (player.shoot());
 		
 	}
 
 	@Override
-	public boolean shockWave() {
+	public boolean shockWave() throws CommandExecuteException {
 		player.shockWave();
 		return false;
 	}
@@ -153,7 +167,6 @@ public class Game implements IPlayerController {
 	@Override
 	public void receivePoints(int points) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -161,14 +174,23 @@ public class Game implements IPlayerController {
 		player.enableShockWave();
 	}
 
-	@Override
-	public void enableMissile() {
-		// TODO Auto-generated method stub
-
-	}
 
 	public int getCurrentCycle() {
 		return currentCycle;
+	}
+
+	public int getPoints() {
+		return points;
+	}
+
+	public void setPoints(int points) {
+		this.points = points;
+	}
+
+	@Override
+	public void enableMissile() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

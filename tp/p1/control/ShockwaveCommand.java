@@ -1,5 +1,6 @@
 package tp.p1.control;
 
+import tp.p1.logic.CommandExecuteException;
 import tp.p1.logic.Game;
 
 public class ShockwaveCommand extends Command {
@@ -10,7 +11,7 @@ public class ShockwaveCommand extends Command {
 	}
 
 	@Override
-	public boolean execute(Game game) {
+	public boolean execute(Game game) throws CommandExecuteException {
 		game.shockWave();
 		return true;
 	}
