@@ -22,6 +22,7 @@ public class Game implements IPlayerController {
 	private int currentCycle;
 	private Random rand;
 	private Level level;
+	private GamePrinter print;
 
 	GameObjectBoard board;
 
@@ -48,8 +49,13 @@ public class Game implements IPlayerController {
 	
 	public String toString()
 	{
-		GamePrinter print = new GamePrinter(this, DIM_Y, DIM_X);
-		return infoToString() + print.toString();
+		if(print == null || print.getClass() != Stringifier.class)
+		{
+			print = new BoardPrinter(this, DIM_Y, DIM_X);
+			return infoToString() + print.toString();
+		}
+		return (print.toString());
+		
 	}
 	
 	public Random getRandom() {
@@ -191,6 +197,25 @@ public class Game implements IPlayerController {
 	public void enableMissile() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void explosive(Cord cord) {
+		board.explosive(cord);
+		
+	}
+
+	public void setPrint(GamePrinter print) {
+		this.print = print;
+	}
+	public String levelAsString()
+	{
+		if(level == Level.EASY)
+			return ("easy");
+		if(level == Level.HARD)
+			return ("hard");
+		if(level == Level.INSANE)
+			return ("insane");
+		return ("");
 	}
 	
 }

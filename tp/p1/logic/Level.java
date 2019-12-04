@@ -4,7 +4,7 @@ import tp.p1.util.*;
 
 public enum Level {
 
-	EASY(4, 2, 0.2, 3, 0.5, 1), HARD(8, 4, 0.3, 2, 0.2, 2), INSANE(12, 4, 0.5, 1, 0.1, 3);
+	EASY(4, 2, 0.2, 3, 0.5, 1, 0.05), HARD(8, 4, 0.3, 2, 0.2, 2, 0.05), INSANE(12, 4, 0.5, 1, 0.1, 3, 0.05);
 
 	private int numRegularAliens;
 	private int numDestroyerAliens;
@@ -12,9 +12,10 @@ public enum Level {
 	private double ovniFrequency;
 	private double shootFrequency;
 	private int numRowsOfRegularAliens;
+	private double explosiveShipFrequency;
 
 	private Level(int numRegularAliens, int numDestroyerAliens, double shootFrequency, int numCyclesToMoveOneCell,
-			double ovniFrequency, int numRowsOfRegularAliens) {
+			double ovniFrequency, int numRowsOfRegularAliens, double explosiveShipFrequency) {
 
 		this.numRegularAliens = numRegularAliens;
 		this.numDestroyerAliens = numDestroyerAliens;
@@ -22,6 +23,7 @@ public enum Level {
 		this.numCyclesToMoveOneCell = numCyclesToMoveOneCell;
 		this.ovniFrequency = ovniFrequency;
 		this.numRowsOfRegularAliens = numRowsOfRegularAliens;
+		this.explosiveShipFrequency = explosiveShipFrequency;
 	}
 
 	public int getNumRegularAliens() {
@@ -65,6 +67,10 @@ public enum Level {
 
 	public Double getTurnExplodeFreq() {
 		return 0.05;
+	}
+
+	public double getExplosiveShipFrequency() {
+		return explosiveShipFrequency;
 	}
 
 }

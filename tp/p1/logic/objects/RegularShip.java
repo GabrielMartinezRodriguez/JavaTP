@@ -14,4 +14,16 @@ public class RegularShip extends AlienShip {
 	{
 		return ("R["+live+"]");
 	}
+	public void computerAction()
+	{
+		game.getBoard().replace(this, new ExplosiveShip(game, cord, live));
+		
+	}
+	public String objectAsString() {
+		String str = "R;" + cord.get_col() + ";" + cord.get_row() + ";" + live + ";" +
+				(game.getLevel().getNumCyclesToMoveOneCell() - game.getCurrentCycle() %
+						game.getLevel().getNumCyclesToMoveOneCell())
+				+ AlienShip.getMove() + "\n";
+		return str;
+	}
 }

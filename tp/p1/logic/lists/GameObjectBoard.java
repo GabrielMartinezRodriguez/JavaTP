@@ -4,6 +4,8 @@ import tp.p1.logic.Game;
 import tp.p1.logic.objects.AlienShip;
 import tp.p1.logic.objects.Bomb;
 import tp.p1.logic.objects.DestroyerShip;
+import tp.p1.logic.objects.EnemyShip;
+import tp.p1.logic.objects.ExplosiveShip;
 import tp.p1.logic.objects.GameObject;
 import tp.p1.logic.objects.Ovni;
 import tp.p1.logic.objects.RegularShip;
@@ -43,7 +45,7 @@ public class GameObjectBoard {
 		flag = true;
 		while(i < currentObjects && flag)
 		{
-			if((objects[i].getClass() == DestroyerShip.class|| objects[i].getClass() == RegularShip.class)
+			if((objects[i] instanceof AlienShip)
 					&& objects[i].isAlive())
 				flag = false;
 			i++;
@@ -60,7 +62,7 @@ public class GameObjectBoard {
 		flag = true;
 		while(i < currentObjects && flag)
 		{
-			if((objects[i].getClass() == DestroyerShip.class|| objects[i].getClass() == RegularShip.class)
+			if((objects[i] instanceof AlienShip)
 					&& objects[i].getCord().get_row() == Game.DIM_Y - 1 && objects[i].isAlive())
 				flag = false;
 			i++;
@@ -129,6 +131,9 @@ public class GameObjectBoard {
 			if(objects[i].getClass() == Ovni.class
 				&& Ovni.canGenerateRandomOvni(objects[i].getGame()))
 				objects[i].computerAction();
+			if(objects[i].getClass() == RegularShip.class
+				&& ExplosiveShip.canGenerateExplosiveShip(objects[i].getGame()))
+				objects[i].computerAction();
 			i++;
 		}
 	}
@@ -167,6 +172,7 @@ public class GameObjectBoard {
 		int i;
 		int j;
 		boolean flag;
+		UCMShipLaser laser;
 		
 		i = 0;
 		flag = true;
@@ -178,17 +184,21 @@ public class GameObjectBoard {
 		}
 		i--;
 		j = 0;
+		laser = (UCMShipLaser)objects[i];
+		flag = false;
 		while(j < currentObjects)
 		{
-			if(objects[j].getClass() == Bomb.class || objects[j].getClass() == DestroyerShip.class ||
-					objects[j].getClass() == RegularShip.class || objects[j].getClass() == Ovni.class)
+			if(objects[j].getClass() == Bomb.class || objects[j] instanceof EnemyShip)
 			{
 				if(objects[j].getClass() == Ovni.class && objects[j].isOnPosition(objects[i].getCord()))
 					objects[j].getGame().enableShockWave();
-				objects[i].performAttack(objects[j]);
+				if(laser.performAttack(objects[j]))
+					flag = true;
 			}
 			j++;
 		}
+		if(flag)
+			laser.dead();
 	}
 	public void moveBombs()
 	{
@@ -203,8 +213,6 @@ public class GameObjectBoard {
 				if(objects[i].getCord().get_row() >= Game.DIM_Y)
 					objects[i].getDamage(1);
 			}
-
-			
 			i++;
 		}
 		
@@ -262,7 +270,7 @@ public class GameObjectBoard {
 		flag = true;
 		while(i < currentObjects && flag)
 		{
-			if((objects[i].getClass() == DestroyerShip.class || objects[i].getClass() == RegularShip.class)
+			if((objects[i] instanceof AlienShip)
 					&& objects[i].isAlive())
 			{
 				if(objects[i].getCord().get_col() == 0 && AlienShip.move == -1)
@@ -297,7 +305,7 @@ public class GameObjectBoard {
 		checkMove();
 		while(i < currentObjects)
 		{
-			if(objects[i].getClass() == DestroyerShip.class || objects[i].getClass() == RegularShip.class)
+			if(objects[i] instanceof AlienShip)
 				objects[i].move();
 			i++;
 		}
@@ -307,9 +315,7 @@ public class GameObjectBoard {
 		if(shock.getEnable()) {
 			for(int i = 0; i < currentObjects; i++)
 			{
-				if(objects[i].getClass() == DestroyerShip.class ||
-						objects[i].getClass() == RegularShip.class ||
-							objects[i].getClass() == Ovni.class)
+				if(objects[i] instanceof AlienShip)
 					shock.performAttack(objects[i]);
 			}
 		}
@@ -322,9 +328,55 @@ public class GameObjectBoard {
 		cont = 0;
 		for(int i = 0; i < currentObjects; i++)
 		{
-			if(objects[i].getClass() == RegularShip.class || objects[i].getClass() == DestroyerShip.class)
+			if(objects[i] instanceof AlienShip)
 				cont++;
 		}
 		return (cont);
+	}
+	public void explosive(Cord cord) {
+		GameObject	object;
+		Cord cpy = new Cord(cord);
+		
+		cpy.set_col(cpy.get_col() - 1);
+		cpy.set_row(cpy.get_row() - 1);
+		for(int i = 0; i < 3; i++)
+		{
+			for(int j = 0; j < 3; j++)
+			{
+				object = getObjectInPosition(cpy);
+				if(object != null)
+					object.getDamage(1);
+				cpy.set_col(cpy.get_col() + 1);
+			}
+			cpy.set_col(cpy.get_col() - 3);
+			cpy.set_row(cpy.get_row() + 1);
+		}
+	}
+	public boolean replace(GameObject old, GameObject replace)
+	{
+		int i;
+		boolean flag;
+	
+		i = 0;
+		flag = true;
+		while(i < currentObjects && flag)
+		{
+			if(objects[i] == old)
+			{
+				objects[i] = replace;
+				flag = false;
+			}
+			i++;
+		}
+		return (!flag);
+	}
+	public String boardAsString()
+	{
+		String str = "";
+		for(int i = 0; i < currentObjects; i++)
+		{
+			str += objects[i].objectAsString();
+		}
+		return (str);
 	}
 }

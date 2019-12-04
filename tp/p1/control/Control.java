@@ -38,7 +38,7 @@ public class Control {
 							mod_game = command.execute(juego);
 						else
 							System.out.println("Comando desconocido");
-					}catch(CommandExecuteException ex) {
+					}catch(CommandParseException | CommandExecuteException ex) {
 						System.out.format(ex.getMessage() + " %n %n");
 					}
 				}

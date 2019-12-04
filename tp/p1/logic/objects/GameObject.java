@@ -60,7 +60,12 @@ public abstract class GameObject implements IAttack {
 		this.getDamage(damage);
 		return true;
 	}
+	public boolean receiveExplosiveShipAttack(int damage) {
+		this.getDamage(damage);
+		return true;
+	}
 	public Game getGame() {
 		return game;
 	}
+	public abstract String objectAsString();
 }

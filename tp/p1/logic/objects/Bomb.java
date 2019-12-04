@@ -29,4 +29,10 @@ public class Bomb extends Weapon {
 		}
 		return false;
 	}
+
+	@Override
+	public String objectAsString() {
+		String str = "B;" + cord.get_col() + ";" + cord.get_row() + "\n";
+		return str;
+	}
 }

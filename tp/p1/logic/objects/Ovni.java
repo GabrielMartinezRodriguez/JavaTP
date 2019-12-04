@@ -28,4 +28,8 @@ public class Ovni extends EnemyShip implements IExecuteRandomActions{
 			live = 1;
 		}
 	}
+	public String objectAsString() {
+		String str = "O;" + cord.get_col() + ";" + cord.get_row() + ";" + live + "\n";
+		return str;
+	}
 }

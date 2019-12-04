@@ -4,16 +4,18 @@ public class CommandGenerator
 {
     private static Command[] availableCommands = {
         new ListCommand(),
+        new ListPrintersCommand(),
         new HelpCommand(),
         new ResetCommand(),
         new ExitCommand(),
         new MoveCommand(),
         new ShockwaveCommand(),
         new ShootCommand(),
+        new StringifyCommand(),
         new NoneCommand()
     };
 
-    public static Command parseCommand(String[] commandWords)
+    public static Command parseCommand(String[] commandWords) throws CommandParseException
     {
         int i;
         boolean flag;
@@ -28,6 +30,8 @@ public class CommandGenerator
                 flag = false;
             i++;
         }
+        if(flag)
+        	throw new CommandParseException("COMANDO INVALIDO");
         return (returned);
     }
     

@@ -31,4 +31,11 @@ public class DestroyerShip extends AlienShip implements IExecuteRandomActions{
 			bomb.onDelete();
 		}
 	}
+	public String objectAsString() {
+		String str = "D;" + cord.get_col() + ";" + cord.get_row() + ";" + live + ";" +
+				(game.getLevel().getNumCyclesToMoveOneCell() - game.getCurrentCycle() %
+						game.getLevel().getNumCyclesToMoveOneCell())
+				+ AlienShip.getMove() + "\n";
+		return str;
+	}
 }

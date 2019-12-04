@@ -37,4 +37,9 @@ public class Shockwave extends Weapon {
 	{
 		return (enable);
 	}
+
+	@Override
+	public String objectAsString() {
+		return "";
+	}
 }

@@ -35,5 +35,8 @@ public class AlienShip extends EnemyShip {
 	{
 		return(game.getBoard().haveLanded());
 	}
-
+	public static int getMove()
+	{
+		return (move);
+	}
 }

@@ -21,7 +21,7 @@ public class UCMShip extends Ship {
 		if(live > 0)
 			return ("^__^");
 		else
-			return (" ¡xx¡  ");
+			return (" !xx!  ");
 	}
 	public boolean shoot() throws CommandExecuteException
 	{
@@ -33,7 +33,7 @@ public class UCMShip extends Ship {
 			return true;
 		}
 		else
-			throw new CommandExecuteException("NO TIENES DISPONIBLE ES DISPARO");
+			throw new CommandExecuteException("NO TIENES DISPONIBLE El DISPARO");
 	}
 	public void enableShockWave()
 	{
@@ -51,4 +51,9 @@ public class UCMShip extends Ship {
 	public boolean getShockWave() {
 		return(shockwave.getEnable());
 	}
+	public String objectAsString() {
+		String str = "P;" + cord.get_col() + ";" + cord.get_row() + ";" + live + ";"+ shockwave.getEnable() + "\n";
+		return str;
+	}
+	
 }
