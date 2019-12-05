@@ -10,6 +10,7 @@ import tp.p1.logic.objects.GameObject;
 import tp.p1.logic.objects.Ovni;
 import tp.p1.logic.objects.RegularShip;
 import tp.p1.logic.objects.Shockwave;
+import tp.p1.logic.objects.SuperMisil;
 import tp.p1.logic.objects.UCMShip;
 import tp.p1.logic.objects.UCMShipLaser;
 import tp.p1.util.Cord;
@@ -96,6 +97,7 @@ public class GameObjectBoard {
 		return (-1);
 	}
 	//puede ser publico
+	@SuppressWarnings("unused")
 	private void remove (GameObject object) {
 		int i;
 	
@@ -116,6 +118,7 @@ public class GameObjectBoard {
 		alienMove();
 		testLaser();
 	}
+	@SuppressWarnings("unused")
 	private void checkAttacks(GameObject object) {
 	// TODO implement
 	}
@@ -137,6 +140,7 @@ public class GameObjectBoard {
 			i++;
 		}
 	}
+	@SuppressWarnings("unused")
 	private void removeDead() {
 	// TODO implement
 	}
@@ -153,39 +157,46 @@ public class GameObjectBoard {
 	public void moveLaser()
 	{
 		int i;
-		boolean flag;
 		
 		i = 0;
-		flag = true;
-		while(i < currentObjects && flag)
+		while(i < currentObjects)
 		{
-			if(objects[i].getClass() == UCMShipLaser.class)
-					flag = false;
+			if(objects[i] instanceof UCMShipLaser)
+			{
+				objects[i].move();
+				if(objects[i].getCord().get_row() < 0)
+					objects[i].getDamage(1);
+			}
 			i++;
 		}
-		objects[i - 1].move();
-		if(objects[i - 1].getCord().get_row() < 0)
-			objects[i - 1].getDamage(1);
+		
 	}
 	public void testLaser()
 	{
 		int i;
 		int j;
-		boolean flag;
+		int k;
+		boolean flag1;
+		boolean flag2;
 		UCMShipLaser laser;
-		
+		SuperMisil misil;
+	
+		k = 0;
+		j = 0;
 		i = 0;
-		flag = true;
-		while(i < currentObjects && flag)
+		while(j < currentObjects)
 		{
-			if(objects[i].getClass() == UCMShipLaser.class)
-					flag = false;
-			i++;
+			if(objects[j].getClass() == UCMShipLaser.class)
+					i = j;
+			if(objects[j].getClass() == SuperMisil.class)
+					k = j;
+			j++;
 		}
-		i--;
 		j = 0;
 		laser = (UCMShipLaser)objects[i];
-		flag = false;
+		misil = (SuperMisil)objects[k];
+		flag1 = false;
+		flag2 = false;
 		while(j < currentObjects)
 		{
 			if(objects[j].getClass() == Bomb.class || objects[j] instanceof EnemyShip)
@@ -193,12 +204,16 @@ public class GameObjectBoard {
 				if(objects[j].getClass() == Ovni.class && objects[j].isOnPosition(objects[i].getCord()))
 					objects[j].getGame().enableShockWave();
 				if(laser.performAttack(objects[j]))
-					flag = true;
+					flag1 = true;
+				if(misil.performAttack(objects[j]))
+					flag2 = true;
 			}
 			j++;
 		}
-		if(flag)
+		if(flag1)
 			laser.dead();
+		if(flag2)
+			misil.dead();
 	}
 	public void moveBombs()
 	{

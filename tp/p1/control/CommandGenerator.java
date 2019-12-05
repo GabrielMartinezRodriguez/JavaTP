@@ -11,6 +11,7 @@ public class CommandGenerator
         new MoveCommand(),
         new ShockwaveCommand(),
         new ShootCommand(),
+        new ComprarCommand(),
         new StringifyCommand(),
         new NoneCommand()
     };

@@ -2,6 +2,11 @@ package tp.p1;
 
 public class BadArgumentsException extends Exception {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public BadArgumentsException() {
 		// TODO Auto-generated constructor stub
 	}

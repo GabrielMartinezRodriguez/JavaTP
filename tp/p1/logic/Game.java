@@ -2,11 +2,11 @@ package tp.p1.logic;
 
 import java.util.Random;
 
-import java.lang.*;
 import tp.p1.logic.lists.GameObjectBoard;
 import tp.p1.logic.objects.AlienShip;
 import tp.p1.logic.objects.GameObject;
 import tp.p1.logic.objects.IPlayerController;
+import tp.p1.logic.objects.SuperMisil;
 import tp.p1.logic.objects.UCMShip;
 import tp.p1.util.Cord;
 
@@ -24,6 +24,7 @@ public class Game implements IPlayerController {
 	private Level level;
 	private GamePrinter print;
 
+	private boolean change;
 	GameObjectBoard board;
 
 	private UCMShip player;
@@ -49,11 +50,15 @@ public class Game implements IPlayerController {
 	
 	public String toString()
 	{
-		if(print == null || print.getClass() != Stringifier.class)
+		
+		if( print == null || change || print.getClass() != Stringifier.class)
 		{
 			print = new BoardPrinter(this, DIM_Y, DIM_X);
+			change = false;
 			return infoToString() + print.toString();
 		}
+		else
+			change = true;
 		return (print.toString());
 		
 	}
@@ -123,6 +128,7 @@ public class Game implements IPlayerController {
 			info += "Si";
 		else
 			info += "NO";
+		info += "\nSuperMisiles: " + player.getnSuperMisil();
 		info += "\n\n\n";
 		return (info);
 	}
@@ -217,5 +223,16 @@ public class Game implements IPlayerController {
 			return ("insane");
 		return ("");
 	}
+
+	public void buySuperMisile() {
+		points -= SuperMisil.getCoste();
+		player.addSuper();
+		
+	}
+	public void shootSuperMissile() throws CommandExecuteException
+	{
+		player.superMisil();
+	}
+
 	
 }

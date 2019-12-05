@@ -14,4 +14,21 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>Integrantes.txt</name>
+			<type>1</type>
+			<locationURI>PARENT-3-PROJECT_LOC/AppData/Local/Temp/Rar$DRa16012.30708/src/Integrantes.txt</locationURI>
+		</link>
+		<link>
+			<name>tp/p1/control/CommandParseException.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/CommandParseException.java</locationURI>
+		</link>
+		<link>
+			<name>tp/p1/logic/objects/ExplosiveShip.java</name>
+			<type>1</type>
+			<locationURI>PARENT-2-PROJECT_LOC/ExplosiveShip.java</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>

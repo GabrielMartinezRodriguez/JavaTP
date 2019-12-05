@@ -9,17 +9,28 @@ public class ShootCommand extends Command {
 		super("shoot", "s", "shoot", "UCM-Ship launches a missile.");
 		// TODO Auto-generated constructor stub
 	}
-
+	public ShootCommand(String Name) {
+		super(Name, "s", "shoot", "UCM-Ship launches a missile.");
+		// TODO Auto-generated constructor stub
+	}
 	@Override
 	public boolean execute(Game game) throws CommandExecuteException {
-		game.shootMissile();
+		if(name.contentEquals("misil"))
+			game.shootMissile();
+		else if(name.contentEquals("supermisil"))
+			game.shootSuperMissile();
 		return true;
 	}
 
 	@Override
 	public Command parse(String[] commandWords) {
 		if(commandWords[0].contentEquals("s") || commandWords[0].contentEquals("shoot"))
-			return (new ShootCommand());
+		{
+			if(commandWords.length > 1 && commandWords[1].contentEquals("supermisil"))
+				return (new ShootCommand("supermisil"));
+			else
+				return (new ShootCommand("misil"));
+		}
 		return null;
 	}
 

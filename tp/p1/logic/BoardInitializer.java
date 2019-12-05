@@ -50,7 +50,7 @@ public class BoardInitializer {
 			desplazamiento = 0;
 		else
 			desplazamiento = 1;
-		Cord cord = new Cord(1 + level.getNumRowsOfRegularAliens(), (game.DIM_X - 1)/2 - desplazamiento);
+		Cord cord = new Cord(1 + level.getNumRowsOfRegularAliens(), (Game.DIM_X - 1)/2 - desplazamiento);
 		for(int i = 0; i < level.getNumDestroyerAliensPerRow(); i++)
 		{
 			board.add(new DestroyerShip(game, new Cord(cord), 3, board));

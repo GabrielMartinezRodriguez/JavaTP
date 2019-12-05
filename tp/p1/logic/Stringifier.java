@@ -10,7 +10,7 @@ public class Stringifier extends GamePrinter {
 	public String toString()
 	{
 		String str = "";
-		str += "â€” Space Invaders v2.0 â€”\n\n";
+		str += "— Space Invaders v2.0 —\n\n";
 		str += "G;" + game.getCurrentCycle() + "\n";
 		str += "L;" + game.levelAsString() + "\n";
 		str += game.getBoard().boardAsString() + "\n";

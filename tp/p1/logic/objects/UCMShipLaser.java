@@ -5,8 +5,11 @@ import tp.p1.util.Cord;
 
 public class UCMShipLaser extends Weapon {
 
+	protected int damage;
+
 	public UCMShipLaser(Game game, Cord cord, int live) {
 		super(game, cord, live);
+		damage = 1;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -23,7 +26,7 @@ public class UCMShipLaser extends Weapon {
 			
 		if(other.getCord().equals(this.cord) && this.isAlive() && other.isAlive())
 		{
-			other.receiveMissileAttack(1);
+			other.receiveMissileAttack(damage);
 			if(!other.isAlive() && (other instanceof EnemyShip))
 			{
 				alien = (EnemyShip)other;
@@ -40,7 +43,7 @@ public class UCMShipLaser extends Weapon {
 		this.live = -1;
 	}
 	public String objectAsString() {
-		String str = "M;" + cord.get_col() + ";" + cord.get_row();
+		String str = "M;" + cord.get_col() + ";" + cord.get_row() + "\n";
 		return str;
 	}
 }

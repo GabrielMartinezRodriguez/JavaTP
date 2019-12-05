@@ -3,7 +3,7 @@ package tp.p1.logic.objects;
 import tp.p1.logic.Game;
 import tp.p1.util.Cord;
 
-public class AlienShip extends EnemyShip {
+public abstract class AlienShip extends EnemyShip {
 	
 	protected int points;
 	public static int move;

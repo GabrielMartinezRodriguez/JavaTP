@@ -53,8 +53,7 @@ public class BoardPrinter extends GamePrinter {
 		}
 		return str.toString();
 	}
-	@Override
-	protected void setGame(Game game) {
+	public void setGame(Game game) {
 		game.setPrint(new BoardPrinter(game, Game.DIM_Y,Game.DIM_X));
 	}
 }

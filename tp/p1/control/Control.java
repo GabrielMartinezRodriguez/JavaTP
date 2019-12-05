@@ -6,9 +6,12 @@ import java.util.*;
 public class Control {
 	private Game juego;
 	private Scanner in;
+	@SuppressWarnings("unused")
 	private Random rand;
+
 	public Control(Level Level, Random rand)
 	{
+		this.rand = rand;
 		in = new Scanner(System.in);
 		juego = new Game(Level, rand);
 		juego.initGame();

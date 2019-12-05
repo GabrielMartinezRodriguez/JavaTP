@@ -1,6 +1,5 @@
 package tp.p1.logic;
 
-import tp.p1.util.*;
 
 public enum Level {
 
