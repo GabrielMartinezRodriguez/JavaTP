@@ -1,0 +1,44 @@
+package tp.p2.logic.objects;
+
+import tp.p2.logic.Game;
+import tp.p2.logic.lists.GameObjectBoard;
+import tp.p2.util.Cord;
+
+public class DestroyerShip extends AlienShip implements IExecuteRandomActions{
+
+	private Bomb bomb;
+	public DestroyerShip(Game game, Cord cord, int live, GameObjectBoard board) {
+		super(game, cord, live);
+		bomb = new Bomb(game, new Cord(cord), -1);
+		board.add(bomb);
+		points = 10;
+		// TODO Auto-generated constructor stub
+	}
+	public String toString()
+	{
+		return ("D["+live+"]");
+	}
+	public static boolean canGenerateRandomBomb(Game game){
+		return game.getRandom().nextDouble() < game.getLevel().getShootFrequency();
+	}
+	public void computerAction()
+	{
+		Cord cpy;
+		if(DestroyerShip.canGenerateRandomBomb(getGame()))
+		{
+			if(!bomb.isAlive() && isAlive())
+			{
+				cpy = new Cord(this.cord);
+				bomb.setCord(cpy);
+				bomb.onDelete();
+			}
+		}	
+	}
+	public String objectAsString() {
+		String str = "D;" + cord.get_col() + ";" + cord.get_row() + ";" + live + ";" +
+				(game.getLevel().getNumCyclesToMoveOneCell() - (game.getCurrentCycle() %
+						game.getLevel().getNumCyclesToMoveOneCell())) + ";"
+				+ AlienShip.getMove() + "\n";
+		return str;
+	}
+}
